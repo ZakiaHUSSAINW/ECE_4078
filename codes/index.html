@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECE4078 Robot Teleoperation</title>
+	<link href="bootstrap.min.css" rel="stylesheet" media="screen"> 
+    <!-- <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" media="screen">-->
+	<script src="jquery.js"></script>
+    <script>
+		
+        $(function(){
+			var isTouchDevice = "ontouchstart" in document.documentElement ? true : false;
+			var BUTTON_DOWN   = isTouchDevice ? "touchstart" : "mousedown";
+			var BUTTON_UP     = isTouchDevice ? "touchend"   : "mouseup";
+			
+            $("button").bind(BUTTON_DOWN,function(){
+                $.post("/cmd",this.id,function(data,status){
+                });
+            });
+
+			$("button").bind(BUTTON_UP,function(){
+                $.post("/cmd","stop",function(data,status){
+                });
+            });
+
+			$(document).on('keydown', function(event) {
+				if(event.keyCode===40 || event.which===40){
+					$.post("/cmd","backward",function(data,status){
+                	});
+				} else if (event.keyCode===38 || event.which===38){
+					$.post("/cmd","forward",function(data,status){
+                	});
+				} else if (event.keyCode===37 || event.which===37){
+					$.post("/cmd","turnleft",function(data,status){
+                	});
+				} else if (event.keyCode===39 || event.which===39){
+					$.post("/cmd","turnright",function(data,status){
+                	});
+				}
+			});
+
+			$(document).on('keyup', function(event) {
+				if(event.keyCode===40 || event.which===40){
+					$.post("/cmd","stop",function(data,status){
+                	});
+				} else if (event.keyCode===38 || event.which===38){
+					$.post("/cmd","stop",function(data,status){
+                	});
+				} else if (event.keyCode=arguments==37 || event.which===37){
+					$.post("/cmd","stop",function(data,status){
+                	});
+				} else if (event.keyCode===39 || event.which===39){
+					$.post("/cmd","stop",function(data,status){
+                	});
+				}
+			});
+		});
+		
+    </script>
+
+	<style type="text/css">
+		button {
+			margin: 10px 15px 10px 15px;
+			width: 50px;
+			height: 50px;
+		}
+		input {
+			margin: 10px 15px 10px 15px;
+			width: 50px;
+			height: 50px;
+		}
+    </style>
+	
+</head>
+<body>
+<div id="container" class="container" align="center">
+	<div style=" width:80%; line-height:40px; text-align:center; font-size:28px; color:white; background-color:blue; margin:auto">
+	ECE4078 Robot Teleoperation
+	</div><br><br>
+
+	<table align="center">
+		<tr>
+			<td align="center"><b>Motor Control</b></td>
+		</tr>
+		<tr>
+			<td>
+				<div align="center">
+					<button id="forward" class="btn btn-lg btn-primary glyphicon glyphicon-circle-arrow-up"></button>
+				</div>
+				<div align="center">
+					<button id='turnleft' class="btn btn-lg btn-primary glyphicon glyphicon-circle-arrow-left"></button>
+					<span style="display: inline-block; margin-left: 30px;"></span>
+					<button id='turnright' class="btn btn-lg btn-primary glyphicon glyphicon-circle-arrow-right"></button>
+				</div>
+				<div align="center">
+					<button id='backward' class="btn btn-lg btn-primary glyphicon glyphicon-circle-arrow-down"></button>
+				</div>
+			</td>
+		</tr>
+	</table>
+	<br><br>
+	<div style=" font-size:20px;">
+		Use arrow keys/buttons above to teleoperate the robot
+	</div>
+</div>
+</body>
+</html>
