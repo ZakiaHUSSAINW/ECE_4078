@@ -3,7 +3,7 @@ import cv2
 import time
 import numpy as np
 from AlphaBot import AlphaBot
-from picamera2 import PiCamera2
+from picamera2 import Picamera2
 from bottle import Bottle, get, run, request
 
 app = Bottle()
